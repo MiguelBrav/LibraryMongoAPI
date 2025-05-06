@@ -1,0 +1,179 @@
+﻿db.createCollection("Roles", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["name"],
+        properties: {
+          name: {
+            bsonType: "object",
+            description: "The role name must be an object with translations and is required"
+          }
+        }
+      }
+    }
+  });
+
+  db.Roles.insertOne({
+    name: {
+      "en": "Admin",
+      "es": "Administrador"
+    }
+  });
+  
+  db.Roles.insertOne({
+    name: {
+      "en": "User",
+      "es": "Usuario"
+    }
+  });
+  
+
+  db.createCollection("Users", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["username", "password", "rolId", "isBanned", "favorites", "featureFlags"],
+        properties: {
+          username: {
+            bsonType: "string",
+            description: "The username must be a string and is required"
+          },
+          password: {
+            bsonType: "string",
+            description: "The password must be a string and is required"
+          },
+          rolId: {
+            bsonType: "objectId",
+            description: "rolId must be an ObjectId and is required"
+          },
+          isBanned: {
+            bsonType: "bool",
+            description: "isBanned must be a boolean and is required"
+          },
+          favorites: {
+            bsonType: "array",
+            items: {
+              bsonType: "objectId"
+            },
+            description: "favorites must be an array of ObjectIds"
+          },
+          featureFlags: {
+            bsonType: "array",
+            items: {
+              bsonType: "objectId"
+            },
+            description: "featureFlags must be an array of ObjectIds referencing the enabled feature flags"
+          }
+        }
+      }
+    }
+  });
+  
+
+
+  ---------  BOOKS
+
+  db.createCollection("Books", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["title", "author", "categoryId", "available", "publicationYear"],
+        properties: {
+          title: {
+            bsonType: "object",
+            description: "The title must be an object with translations and is required"
+          },
+          author: {
+            bsonType: "string",
+            description: "The author must be a string and is required"
+          },
+          categoryId: {
+            bsonType: "objectId",
+            description: "categoryId must be an ObjectId and is required"
+          },
+          available: {
+            bsonType: "bool",
+            description: "available must be a boolean and is required"
+          },
+          publicationYear: {
+            bsonType: "int",
+            description: "publicationYear must be an integer and is required"
+          }
+        }
+      }
+    }
+  });
+  
+  
+
+  ---- categories
+
+  db.createCollection("Categories", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["name"],
+        properties: {
+          name: {
+            bsonType: "object",
+            description: "The name must be an object with translations and is required"
+          }
+        }
+      }
+    }
+  });
+
+  db.Categories.insertOne({
+    name: {
+      "en": "Literary",
+      "es": "Literario"
+    }
+  });
+  
+  db.Categories.insertOne({
+    name: {
+      "en": "Sci-Fi",
+      "es": "Ciencia Ficción"
+    }
+  });
+  
+  
+
+  --- feature flags
+  db.createCollection("FeatureFlags", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["name", "description", "enabled"],
+        properties: {
+          name: {
+            bsonType: "object",
+            description: "The name of the feature flag must be an object with translations and is required"
+          },
+          description: {
+            bsonType: "object",
+            description: "The description of the feature flag must be an object with translations and is required"
+          },
+          enabled: {
+            bsonType: "bool",
+            description: "enabled must be a boolean indicating if the feature is enabled or disabled"
+          }
+        }
+      }
+    }
+  });
+  
+
+
+  db.FeatureFlags.insertOne({
+    name: {
+      "en": "New Dashboard",
+      "es": "Nuevo Panel"
+    },
+    description: {
+      "en": "This feature enables the new user dashboard.",
+      "es": "Esta característica habilita el nuevo panel de usuario."
+    },
+    enabled: true
+  });
+  
