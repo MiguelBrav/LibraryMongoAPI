@@ -1,4 +1,11 @@
-using LibraryMongo.Models;
+using LibraryMongo.Domain.Interfaces;
+using LibraryMongo.Endpoints;
+using LibraryMongo.Infrastructure.Repositories;
+using LibraryMongo.Models.Entities;
+using LibraryMongo.UseCases.Aggregators;
+using LibraryMongo.UseCases.Aggregators.Interfaces;
+using LibraryMongo.UseCases.RoleUseCases;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +25,16 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IMongoClient>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    return new MongoClient(config["MongoDb:ConnectionString"]);
+});
+
+builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
+builder.Services.AddTransient<CreateRoleUseCase>();
+builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,13 +48,6 @@ app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
-
-app.MapGet("/dummy", () =>
-{
-    List<Role> result = new List<Role>();
-    return result;
-})
-.WithName("dummy")
-.WithOpenApi();
+app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
 
 app.Run();

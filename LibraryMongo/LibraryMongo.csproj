@@ -12,10 +12,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LibraryMongo.Domain\LibraryMongo.Domain.csproj" />
+    <ProjectReference Include="..\LibraryMongo.Infrastructure\LibraryMongo.Infrastructure.csproj" />
     <ProjectReference Include="..\LibraryMongo.Models\LibraryMongo.Models.csproj" />
   </ItemGroup>
 
