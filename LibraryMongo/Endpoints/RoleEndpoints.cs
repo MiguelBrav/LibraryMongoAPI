@@ -9,12 +9,18 @@ public static class RoleEndpoints
     {
         group.MapPost("/", Create);
 
+        group.MapGet("/", GetAll);
+
         return group;
     }
 
     static async Task<IResult> Create(CreateRoleDTO role, IRoleUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.CreateRole(role);
+    }
+    static async Task<IResult> GetAll(IRoleUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.GetAllRole();
     }
 
 }

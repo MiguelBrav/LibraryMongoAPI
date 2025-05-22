@@ -7,7 +7,7 @@ namespace LibraryMongo.UseCases.RoleUseCases;
 
 public class CreateRoleUseCase : UseCaseBase<CreateRoleDTO>
 {
-    private IRoleRepository _roleRepository;
+    private readonly IRoleRepository _roleRepository;
 
     public CreateRoleUseCase(IRoleRepository roleRepository)
     {

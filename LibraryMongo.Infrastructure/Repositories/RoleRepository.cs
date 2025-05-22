@@ -20,4 +20,9 @@ public class RoleRepository : IRoleRepository
         await _roles.InsertOneAsync(role);
         return role.Id;
     }
+
+    public async Task<List<Role>> GetAllAsync()
+    {
+        return await _roles.Find(FilterDefinition<Role>.Empty).ToListAsync();
+    }
 }

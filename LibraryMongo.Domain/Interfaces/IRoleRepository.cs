@@ -5,5 +5,6 @@ namespace LibraryMongo.Domain.Interfaces;
 
 public interface IRoleRepository
 {
-    Task <ObjectId> CreateAsync(Role role);  
+    Task <ObjectId> CreateAsync(Role role);
+    Task<List<Role>> GetAllAsync();
 }
