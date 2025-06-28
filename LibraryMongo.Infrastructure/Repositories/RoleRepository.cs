@@ -21,8 +21,32 @@ public class RoleRepository : IRoleRepository
         return role.Id;
     }
 
+    public async Task<bool> UpdateAsync(Role role)
+    {
+        FilterDefinition<Role> filter = Builders<Role>.Filter.Eq(r => r.Id, role.Id);
+        var result = await _roles.ReplaceOneAsync(filter, role);
+
+        return result.IsAcknowledged && result.ModifiedCount > 0;
+    }
+
+    public async Task<bool> DeleteAsync(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        var filter = Builders<Role>.Filter.Eq(r => r.Id, objectId);
+        var result = await _roles.DeleteOneAsync(filter);
+
+        return result.IsAcknowledged && result.DeletedCount > 0;
+    }
+
     public async Task<List<Role>> GetAllAsync()
     {
         return await _roles.Find(FilterDefinition<Role>.Empty).ToListAsync();
+    }
+
+    public async Task<Role> GetById(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        FilterDefinition<Role> filter = Builders<Role>.Filter.Eq(r => r.Id, objectId);
+        return await _roles.Find(filter).FirstOrDefaultAsync();
     }
 }

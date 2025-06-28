@@ -33,6 +33,8 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 
 builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<CreateRoleUseCase>();
+builder.Services.AddTransient<UpdateRoleUseCase>();
+builder.Services.AddTransient<DeleteRoleUseCase>();
 builder.Services.AddTransient<GetAllRoleUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 
