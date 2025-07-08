@@ -15,6 +15,8 @@ public static class RoleEndpoints
 
         group.MapGet("/", GetAll);
 
+        group.MapGet("/{id}", GetById);
+
         return group;
     }
 
@@ -33,6 +35,11 @@ public static class RoleEndpoints
     static async Task<IResult> GetAll(IRoleUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.GetAllRole();
+    }
+
+    static async Task<IResult> GetById(string id, IRoleUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.GetByIdRole(id);
     }
 
 }

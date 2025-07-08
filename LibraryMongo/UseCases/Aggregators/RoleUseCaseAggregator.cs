@@ -10,13 +10,15 @@ public class RoleUseCaseAggregator : IRoleUseCaseAggregator
     private readonly GetAllRoleUseCase _getAllRole;
     private readonly UpdateRoleUseCase _updateRole;
     private readonly DeleteRoleUseCase _deleteRole;
+    private readonly GetByIdRoleUseCase _getByIdRole;
 
-    public RoleUseCaseAggregator(CreateRoleUseCase createRole, GetAllRoleUseCase getAllRole, UpdateRoleUseCase updateRole, DeleteRoleUseCase deleteRole)
+    public RoleUseCaseAggregator(CreateRoleUseCase createRole, GetAllRoleUseCase getAllRole, UpdateRoleUseCase updateRole, DeleteRoleUseCase deleteRole, GetByIdRoleUseCase getByIdRole)
     {
         _createRole = createRole;
         _getAllRole = getAllRole;
         _updateRole = updateRole;
         _deleteRole = deleteRole;
+        _getByIdRole = getByIdRole;
     }
 
     public async Task<IResult> CreateRole(CreateRoleDTO request)
@@ -35,5 +37,10 @@ public class RoleUseCaseAggregator : IRoleUseCaseAggregator
     public async Task<IResult> GetAllRole()
     {
         return await _getAllRole.Execute(Unit.Value);
+    }
+
+    public async Task<IResult> GetByIdRole(string id)
+    {
+        return await _getByIdRole.Execute(id);
     }
 }
