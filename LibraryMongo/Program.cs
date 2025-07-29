@@ -4,6 +4,7 @@ using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.Entities;
 using LibraryMongo.UseCases.Aggregators;
 using LibraryMongo.UseCases.Aggregators.Interfaces;
+using LibraryMongo.UseCases.CategoriesUseCases;
 using LibraryMongo.UseCases.RoleUseCases;
 using MongoDB.Driver;
 
@@ -32,12 +33,15 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 });
 
 builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
+builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<CreateRoleUseCase>();
 builder.Services.AddTransient<UpdateRoleUseCase>();
 builder.Services.AddTransient<DeleteRoleUseCase>();
 builder.Services.AddTransient<GetAllRoleUseCase>();
 builder.Services.AddTransient<GetByIdRoleUseCase>();
+builder.Services.AddTransient<CreateCategoryUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
+builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 
 var app = builder.Build();
 
@@ -53,5 +57,7 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
+
+app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints();
 
 app.Run();
