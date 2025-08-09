@@ -17,8 +17,6 @@ public class GetByIdRoleUseCase : UseCaseBase<string>
     {
         try
         {
-            Role role = await _roleRepository.GetById(id);
-
             Role _existingRole = await _roleRepository.GetById(id);
 
             if (_existingRole is null)
@@ -26,7 +24,7 @@ public class GetByIdRoleUseCase : UseCaseBase<string>
                 return TypedResults.NotFound();
             }
 
-            RoleResponse roleResponse = new RoleResponse(role);
+            RoleResponse roleResponse = new RoleResponse(_existingRole);
 
             return TypedResults.Ok(roleResponse);
         }

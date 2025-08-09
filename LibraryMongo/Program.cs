@@ -40,6 +40,8 @@ builder.Services.AddTransient<DeleteRoleUseCase>();
 builder.Services.AddTransient<GetAllRoleUseCase>();
 builder.Services.AddTransient<GetByIdRoleUseCase>();
 builder.Services.AddTransient<CreateCategoryUseCase>();
+builder.Services.AddTransient<GetAllCategoryUseCase>();
+builder.Services.AddTransient<GetByIdCategoryUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 
