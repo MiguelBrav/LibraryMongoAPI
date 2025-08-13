@@ -9,16 +9,23 @@ public class CategoryUseCaseAggregator : ICategoryUseCaseAggregator
     private readonly CreateCategoryUseCase _createCategory;
     private readonly GetAllCategoryUseCase _getAllCategory;
     private readonly GetByIdCategoryUseCase _getByIdCategory;
+    private readonly DeleteCategoryUseCase _deleteCategory;
 
-    public CategoryUseCaseAggregator(CreateCategoryUseCase createCategory, GetAllCategoryUseCase getAllCategory, GetByIdCategoryUseCase getByIdCategory)
+    public CategoryUseCaseAggregator(CreateCategoryUseCase createCategory, GetAllCategoryUseCase getAllCategory, GetByIdCategoryUseCase getByIdCategory, DeleteCategoryUseCase deleteCategory)
     {
         _createCategory = createCategory;
         _getAllCategory = getAllCategory;
         _getByIdCategory = getByIdCategory;
+        _deleteCategory=deleteCategory;
     }
     public async Task<IResult> CreateCategory(CreateCategoryDTO request)
     {
         return await _createCategory.Execute(request);
+    }
+
+    public async Task<IResult> DeleteCategory(string id)
+    {
+        return await _deleteCategory.Execute(id);
     }
 
     public async Task<IResult> GetAllCategory()

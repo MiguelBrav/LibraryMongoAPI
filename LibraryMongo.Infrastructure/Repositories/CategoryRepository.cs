@@ -20,6 +20,15 @@ public class CategoryRepository : ICategoryRepository
         await _categories.InsertOneAsync(category);
         return category.Id;
     }
+
+    public async Task<bool> DeleteAsync(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        var filter = Builders<Category>.Filter.Eq(r => r.Id, objectId);
+        var result = await _categories.DeleteOneAsync(filter);
+
+        return result.IsAcknowledged && result.DeletedCount > 0;
+    }
     public async Task<List<Category>> GetAllAsync()
     {
         return await _categories.Find(FilterDefinition<Category>.Empty).ToListAsync();
