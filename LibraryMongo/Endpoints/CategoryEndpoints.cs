@@ -9,6 +9,8 @@ public static class CategoryEndpoints
     {
         group.MapPost("/", Create);
 
+        group.MapPut("/", Update);
+
         group.MapDelete("/{id}", Delete);
 
         group.MapGet("/", GetAll);
@@ -22,6 +24,12 @@ public static class CategoryEndpoints
     {
         return await useCase.CreateCategory(category);
     }
+
+    static async Task<IResult> Update(UpdateCategoryDTO category, ICategoryUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.UpdateCategory(category);
+    }
+
     static async Task<IResult> Delete(string id, ICategoryUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.DeleteCategory(id);
@@ -31,6 +39,7 @@ public static class CategoryEndpoints
     {
         return await useCase.GetAllCategory();
     }
+
     static async Task<IResult> GetById(string id, ICategoryUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.GetByIdCategory(id);

@@ -21,6 +21,14 @@ public class CategoryRepository : ICategoryRepository
         return category.Id;
     }
 
+    public async Task<bool> UpdateAsync(Category category)
+    {
+        FilterDefinition<Category> filter = Builders<Category>.Filter.Eq(r => r.Id, category.Id);
+        var result = await _categories.ReplaceOneAsync(filter, category);
+
+        return result.IsAcknowledged && result.ModifiedCount > 0;
+    }
+
     public async Task<bool> DeleteAsync(string id)
     {
         ObjectId objectId = ObjectId.Parse(id);

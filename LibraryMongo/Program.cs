@@ -40,6 +40,7 @@ builder.Services.AddTransient<DeleteRoleUseCase>();
 builder.Services.AddTransient<GetAllRoleUseCase>();
 builder.Services.AddTransient<GetByIdRoleUseCase>();
 builder.Services.AddTransient<CreateCategoryUseCase>();
+builder.Services.AddTransient<UpdateCategoryUseCase>();
 builder.Services.AddTransient<DeleteCategoryUseCase>();
 builder.Services.AddTransient<GetAllCategoryUseCase>();
 builder.Services.AddTransient<GetByIdCategoryUseCase>();
