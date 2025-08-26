@@ -1,0 +1,9 @@
+﻿using LibraryMongo.Models.Entities;
+using MongoDB.Bson;
+
+namespace LibraryMongo.Domain.Interfaces;
+
+public interface IFeatureFlagRepository
+{
+    Task<List<FeatureFlag>> GetAllAsync();
+}

@@ -5,6 +5,7 @@ using LibraryMongo.Models.Entities;
 using LibraryMongo.UseCases.Aggregators;
 using LibraryMongo.UseCases.Aggregators.Interfaces;
 using LibraryMongo.UseCases.CategoriesUseCases;
+using LibraryMongo.UseCases.FeatureFlagsUseCases;
 using LibraryMongo.UseCases.RoleUseCases;
 using MongoDB.Driver;
 
@@ -34,6 +35,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 
 builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
+builder.Services.AddSingleton<IFeatureFlagRepository, FeatureFlagRepository>();
 builder.Services.AddTransient<CreateRoleUseCase>();
 builder.Services.AddTransient<UpdateRoleUseCase>();
 builder.Services.AddTransient<DeleteRoleUseCase>();
@@ -44,9 +46,10 @@ builder.Services.AddTransient<UpdateCategoryUseCase>();
 builder.Services.AddTransient<DeleteCategoryUseCase>();
 builder.Services.AddTransient<GetAllCategoryUseCase>();
 builder.Services.AddTransient<GetByIdCategoryUseCase>();
+builder.Services.AddTransient<GetAllFeatureFlagsUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
-
+builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,5 +66,7 @@ app.UseHttpsRedirection();
 app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
 
 app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints();
+
+app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints();
 
 app.Run();
