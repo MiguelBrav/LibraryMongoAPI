@@ -20,5 +20,11 @@ public class FeatureFlagRepository : IFeatureFlagRepository
     {
         return await _features.Find(FilterDefinition<FeatureFlag>.Empty).ToListAsync();
     }
+    public async Task<FeatureFlag> GetById(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        FilterDefinition<FeatureFlag> filter = Builders<FeatureFlag>.Filter.Eq(r => r.Id, objectId);
+        return await _features.Find(filter).FirstOrDefaultAsync();
+    }
 
 }

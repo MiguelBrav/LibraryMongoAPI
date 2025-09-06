@@ -6,4 +6,5 @@ namespace LibraryMongo.Domain.Interfaces;
 public interface IFeatureFlagRepository
 {
     Task<List<FeatureFlag>> GetAllAsync();
+    Task<FeatureFlag> GetById(string id);
 }

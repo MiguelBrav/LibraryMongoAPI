@@ -9,11 +9,17 @@ public static class FeatureFlagEndpoints
     {
         group.MapGet("/", GetAll);
 
+        group.MapGet("/{id}", GetById);
+
         return group;
     }
 
     static async Task<IResult> GetAll(IFeatureFlagUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.GetAllFeatureFlags();
+    }
+    static async Task<IResult> GetById(string id, IFeatureFlagUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.GetByIdFeatureFlag(id);
     }
 }
