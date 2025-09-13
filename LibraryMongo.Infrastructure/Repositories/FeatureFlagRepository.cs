@@ -16,6 +16,12 @@ public class FeatureFlagRepository : IFeatureFlagRepository
         _features = database.GetCollection<FeatureFlag>("FeatureFlags");
     }
 
+    public async Task<ObjectId> CreateAsync(FeatureFlag featureFlag)
+    {
+        await _features.InsertOneAsync(featureFlag);
+        return featureFlag.Id;
+    }
+
     public async Task<List<FeatureFlag>> GetAllAsync()
     {
         return await _features.Find(FilterDefinition<FeatureFlag>.Empty).ToListAsync();
