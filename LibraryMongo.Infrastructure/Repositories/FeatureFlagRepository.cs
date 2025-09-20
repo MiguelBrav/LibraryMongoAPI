@@ -22,6 +22,15 @@ public class FeatureFlagRepository : IFeatureFlagRepository
         return featureFlag.Id;
     }
 
+    public async Task<bool> UpdateAsync(FeatureFlag featureFlag)
+    {
+        FilterDefinition<FeatureFlag> filter = Builders<FeatureFlag>.Filter.Eq(r => r.Id, featureFlag.Id);
+        var result = await _features.ReplaceOneAsync(filter, featureFlag);
+
+        return result.IsAcknowledged && result.ModifiedCount > 0;
+    }
+
+
     public async Task<List<FeatureFlag>> GetAllAsync()
     {
         return await _features.Find(FilterDefinition<FeatureFlag>.Empty).ToListAsync();

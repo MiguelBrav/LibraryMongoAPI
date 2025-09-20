@@ -49,6 +49,7 @@ builder.Services.AddTransient<GetByIdCategoryUseCase>();
 builder.Services.AddTransient<GetAllFeatureFlagsUseCase>();
 builder.Services.AddTransient<GetByIdFeatureFlagUseCase>();
 builder.Services.AddTransient<CreateFeatureFlagUseCase>();
+builder.Services.AddTransient<UpdateFeatureFlagUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();

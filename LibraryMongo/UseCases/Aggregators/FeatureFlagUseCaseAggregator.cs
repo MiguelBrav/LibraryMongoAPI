@@ -12,16 +12,24 @@ public class FeatureFlagUseCaseAggregator : IFeatureFlagUseCaseAggregator
 
     private readonly CreateFeatureFlagUseCase _createFeatureFlagUseCase;
 
-    public FeatureFlagUseCaseAggregator(GetAllFeatureFlagsUseCase getAllFeatureFlags, GetByIdFeatureFlagUseCase getByIdFeatureFlag, CreateFeatureFlagUseCase createFeatureFlagUseCase)
+    private readonly UpdateFeatureFlagUseCase _updateFeatureFlagUseCase;
+
+    public FeatureFlagUseCaseAggregator(GetAllFeatureFlagsUseCase getAllFeatureFlags, GetByIdFeatureFlagUseCase getByIdFeatureFlag, 
+        CreateFeatureFlagUseCase createFeatureFlagUseCase, UpdateFeatureFlagUseCase updateFeatureFlagUseCase)
     {
         _getAllFeatureFlags = getAllFeatureFlags;
         _getByIdFeatureFlag = getByIdFeatureFlag;
         _createFeatureFlagUseCase = createFeatureFlagUseCase;
+        _updateFeatureFlagUseCase = updateFeatureFlagUseCase;
     }
 
     public async Task<IResult> CreateFeatureFlag(CreateFeatureFlagDTO request)
     {
         return await _createFeatureFlagUseCase.Execute(request);
+    }
+    public async Task<IResult> UpdateFeatureFlag(UpdateFeatureFlagDTO request)
+    {
+        return await _updateFeatureFlagUseCase.Execute(request);
     }
 
     public async Task<IResult> GetAllFeatureFlags()

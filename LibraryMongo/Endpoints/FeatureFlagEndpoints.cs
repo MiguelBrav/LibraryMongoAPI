@@ -10,6 +10,8 @@ public static class FeatureFlagEndpoints
     {
         group.MapPost("/", Create);
 
+        group.MapPut("/", Update);
+
         group.MapGet("/", GetAll);
 
         group.MapGet("/{id}", GetById);
@@ -20,6 +22,10 @@ public static class FeatureFlagEndpoints
     static async Task<IResult> Create(CreateFeatureFlagDTO flag, IFeatureFlagUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.CreateFeatureFlag(flag);
+    }
+    static async Task<IResult> Update(UpdateFeatureFlagDTO flag, IFeatureFlagUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.UpdateFeatureFlag(flag);
     }
 
     static async Task<IResult> GetAll(IFeatureFlagUseCaseAggregator useCase, HttpContext httpContext)

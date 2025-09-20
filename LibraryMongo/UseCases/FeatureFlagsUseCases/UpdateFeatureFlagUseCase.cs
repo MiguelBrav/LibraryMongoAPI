@@ -1,22 +1,28 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
+using MongoDB.Bson;
 
 namespace LibraryMongo.UseCases.FeatureFlagsUseCases;
 
-public class CreateFeatureFlagUseCase : UseCaseBase<CreateFeatureFlagDTO>
+public class UpdateFeatureFlagUseCase : UseCaseBase<UpdateFeatureFlagDTO>
 {
     private readonly IFeatureFlagRepository _featureFlagRepository;
 
-    public CreateFeatureFlagUseCase(IFeatureFlagRepository featureFlagRepository)
+    public UpdateFeatureFlagUseCase(IFeatureFlagRepository featureFlagRepository)
     {
         _featureFlagRepository = featureFlagRepository;
     }
 
-    public override async Task<IResult> Execute(CreateFeatureFlagDTO request)
+    public override async Task<IResult> Execute(UpdateFeatureFlagDTO request)
     {
         try
         {
+            if (string.IsNullOrEmpty(request.Id))
+            {
+                return TypedResults.BadRequest("Id is required and cannot be empty.");
+            }
+
             if (request.Name == null || !request.Name.Any())
             {
                 return TypedResults.BadRequest("Name dictionary is required and cannot be empty.");
@@ -29,14 +35,20 @@ public class CreateFeatureFlagUseCase : UseCaseBase<CreateFeatureFlagDTO>
 
             FeatureFlag flag = new FeatureFlag
             {
+                Id = ObjectId.Parse(request.Id),
                 Name = request.Name,
                 Description = request.Description,
                 Enabled = request.Enabled,
             };
 
-            await _featureFlagRepository.CreateAsync(flag);
+            bool isUpdated = await _featureFlagRepository.UpdateAsync(flag);
 
-            return TypedResults.Created($"/featureflags/{flag.Id}", flag);
+            if (!isUpdated)
+            {
+                return TypedResults.Ok("No changes were made to the flag feature.");
+            }
+
+            return TypedResults.Ok(flag);
         }
         catch (Exception ex)
         {
