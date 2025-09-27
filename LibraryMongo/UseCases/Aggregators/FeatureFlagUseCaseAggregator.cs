@@ -14,13 +14,16 @@ public class FeatureFlagUseCaseAggregator : IFeatureFlagUseCaseAggregator
 
     private readonly UpdateFeatureFlagUseCase _updateFeatureFlagUseCase;
 
-    public FeatureFlagUseCaseAggregator(GetAllFeatureFlagsUseCase getAllFeatureFlags, GetByIdFeatureFlagUseCase getByIdFeatureFlag, 
-        CreateFeatureFlagUseCase createFeatureFlagUseCase, UpdateFeatureFlagUseCase updateFeatureFlagUseCase)
+    private readonly DeleteFeatureFlagUserCase _deleteFeatureFlagUseCase;
+
+    public FeatureFlagUseCaseAggregator(GetAllFeatureFlagsUseCase getAllFeatureFlags, GetByIdFeatureFlagUseCase getByIdFeatureFlag,
+        CreateFeatureFlagUseCase createFeatureFlagUseCase, UpdateFeatureFlagUseCase updateFeatureFlagUseCase, DeleteFeatureFlagUserCase deleteFeatureFlagUseCase)
     {
         _getAllFeatureFlags = getAllFeatureFlags;
         _getByIdFeatureFlag = getByIdFeatureFlag;
         _createFeatureFlagUseCase = createFeatureFlagUseCase;
         _updateFeatureFlagUseCase = updateFeatureFlagUseCase;
+        _deleteFeatureFlagUseCase = deleteFeatureFlagUseCase;
     }
 
     public async Task<IResult> CreateFeatureFlag(CreateFeatureFlagDTO request)
@@ -30,6 +33,10 @@ public class FeatureFlagUseCaseAggregator : IFeatureFlagUseCaseAggregator
     public async Task<IResult> UpdateFeatureFlag(UpdateFeatureFlagDTO request)
     {
         return await _updateFeatureFlagUseCase.Execute(request);
+    }
+    public async Task<IResult> DeleteFeatureFlag(string id)
+    {
+        return await _deleteFeatureFlagUseCase.Execute(id);
     }
 
     public async Task<IResult> GetAllFeatureFlags()

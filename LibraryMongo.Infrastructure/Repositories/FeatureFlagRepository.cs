@@ -30,6 +30,14 @@ public class FeatureFlagRepository : IFeatureFlagRepository
         return result.IsAcknowledged && result.ModifiedCount > 0;
     }
 
+    public async Task<bool> DeleteAsync(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        var filter = Builders<FeatureFlag>.Filter.Eq(r => r.Id, objectId);
+        var result = await _features.DeleteOneAsync(filter);
+
+        return result.IsAcknowledged && result.DeletedCount > 0;
+    }
 
     public async Task<List<FeatureFlag>> GetAllAsync()
     {
