@@ -1,3 +1,4 @@
+using LibraryMongo.Configurations;
 using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Endpoints;
 using LibraryMongo.Infrastructure.Repositories;
@@ -7,6 +8,7 @@ using LibraryMongo.UseCases.Aggregators.Interfaces;
 using LibraryMongo.UseCases.CategoriesUseCases;
 using LibraryMongo.UseCases.FeatureFlagsUseCases;
 using LibraryMongo.UseCases.RoleUseCases;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,8 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     var config = sp.GetRequiredService<IConfiguration>();
     return new MongoClient(config["MongoDb:ConnectionString"]);
 });
+
+builder.Services.AddHealthChecks().AddCheck<MongoCheck>("mongodb");
 
 builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
@@ -66,6 +70,11 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    ResponseWriter = HealthCheckResponse.WriteResponse
+});
 
 app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
 
