@@ -49,4 +49,10 @@ public class RoleRepository : IRoleRepository
         FilterDefinition<Role> filter = Builders<Role>.Filter.Eq(r => r.Id, objectId);
         return await _roles.Find(filter).FirstOrDefaultAsync();
     }
+
+    public async Task<Role> GetByNameAndLanguage(string name, string language)
+    {
+        var filter = Builders<Role>.Filter.Eq($"name.{language}", name);
+        return await _roles.Find(filter).FirstOrDefaultAsync();
+    }
 }

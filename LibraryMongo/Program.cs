@@ -8,6 +8,7 @@ using LibraryMongo.UseCases.Aggregators.Interfaces;
 using LibraryMongo.UseCases.CategoriesUseCases;
 using LibraryMongo.UseCases.FeatureFlagsUseCases;
 using LibraryMongo.UseCases.RoleUseCases;
+using LibraryMongo.UseCases.UserUseCases;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using MongoDB.Driver;
 
@@ -40,6 +41,7 @@ builder.Services.AddHealthChecks().AddCheck<MongoCheck>("mongodb");
 builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
 builder.Services.AddSingleton<IFeatureFlagRepository, FeatureFlagRepository>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddTransient<CreateRoleUseCase>();
 builder.Services.AddTransient<UpdateRoleUseCase>();
 builder.Services.AddTransient<DeleteRoleUseCase>();
@@ -55,9 +57,11 @@ builder.Services.AddTransient<GetByIdFeatureFlagUseCase>();
 builder.Services.AddTransient<CreateFeatureFlagUseCase>();
 builder.Services.AddTransient<UpdateFeatureFlagUseCase>();
 builder.Services.AddTransient<DeleteFeatureFlagUserCase>();
+builder.Services.AddTransient<CreateUserUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();
+builder.Services.AddTransient<IUserUseCaseAggregator, UserUseCaseAggregator>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,5 +85,7 @@ app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
 app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints();
 
 app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints();
+
+app.MapGroup("/users").WithTags("Users").MapUserEndpoints();
 
 app.Run();

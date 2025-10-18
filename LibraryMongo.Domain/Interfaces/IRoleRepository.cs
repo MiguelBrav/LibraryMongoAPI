@@ -10,5 +10,5 @@ public interface IRoleRepository
     Task<bool> DeleteAsync(string id);
     Task<List<Role>> GetAllAsync();
     Task<Role> GetById(string id);
-
+    Task<Role> GetByNameAndLanguage(string name, string language);
 }
