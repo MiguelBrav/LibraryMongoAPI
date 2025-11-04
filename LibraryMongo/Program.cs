@@ -58,6 +58,7 @@ builder.Services.AddTransient<CreateFeatureFlagUseCase>();
 builder.Services.AddTransient<UpdateFeatureFlagUseCase>();
 builder.Services.AddTransient<DeleteFeatureFlagUserCase>();
 builder.Services.AddTransient<CreateUserUseCase>();
+builder.Services.AddTransient<DeleteUserUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();

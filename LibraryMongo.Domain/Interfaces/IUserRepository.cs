@@ -7,5 +7,8 @@ public interface IUserRepository
 {
     Task <ObjectId> CreateAsync(User user);
     Task<bool> ExistsByUsernameAsync(string username);
+    Task<User> GetById(string id);
+    Task<bool> DeleteAsync(string id);
+
 }
 

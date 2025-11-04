@@ -9,11 +9,17 @@ public static class UserEndpoints
     {
         group.MapPost("/", Create);
 
+        group.MapDelete("/{id}", Delete);
+
         return group;
     }
 
     static async Task<IResult> Create(CreateUserDTO user, IUserUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.CreateUser(user);
+    }
+    static async Task<IResult> Delete(string id, IUserUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.DeleteUser(id);
     }
 }

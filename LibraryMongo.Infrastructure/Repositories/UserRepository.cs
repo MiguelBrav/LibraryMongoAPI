@@ -25,4 +25,20 @@ public class UserRepository : IUserRepository
         var filter = Builders<User>.Filter.Eq(u => u.Username, username);
         return await _users.Find(filter).AnyAsync();
     }
+    public async Task<User> GetById(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        FilterDefinition<User> filter = Builders<User>.Filter.Eq(r => r.Id, objectId);
+        return await _users.Find(filter).FirstOrDefaultAsync();
+    }
+
+    public async Task<bool> DeleteAsync(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        var filter = Builders<User>.Filter.Eq(r => r.Id, objectId);
+        var result = await _users.DeleteOneAsync(filter);
+
+        return result.IsAcknowledged && result.DeletedCount > 0;
+    }
+
 }
