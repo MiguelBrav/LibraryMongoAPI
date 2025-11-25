@@ -9,6 +9,7 @@ using LibraryMongo.UseCases.CategoriesUseCases;
 using LibraryMongo.UseCases.FeatureFlagsUseCases;
 using LibraryMongo.UseCases.RoleUseCases;
 using LibraryMongo.UseCases.UserUseCases;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using MongoDB.Driver;
 
@@ -24,6 +25,21 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/users/login";         
+        options.LogoutPath = "/users/logout";        
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+        options.SlidingExpiration = true;
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    });
+
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -58,6 +74,8 @@ builder.Services.AddTransient<CreateFeatureFlagUseCase>();
 builder.Services.AddTransient<UpdateFeatureFlagUseCase>();
 builder.Services.AddTransient<DeleteFeatureFlagUserCase>();
 builder.Services.AddTransient<CreateUserUseCase>();
+builder.Services.AddTransient<LoginUserUseCase>();
+builder.Services.AddTransient<LogoutUserUseCase>();
 builder.Services.AddTransient<DeleteUserUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
@@ -74,6 +92,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions
@@ -81,11 +102,11 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions
     ResponseWriter = HealthCheckResponse.WriteResponse
 });
 
-app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
+app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints().RequireAuthorization();
 
-app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints();
+app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints().RequireAuthorization();
 
-app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints();
+app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints().RequireAuthorization();
 
 app.MapGroup("/users").WithTags("Users").MapUserEndpoints();
 

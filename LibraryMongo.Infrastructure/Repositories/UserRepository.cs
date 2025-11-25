@@ -25,6 +25,11 @@ public class UserRepository : IUserRepository
         var filter = Builders<User>.Filter.Eq(u => u.Username, username);
         return await _users.Find(filter).AnyAsync();
     }
+    public async Task<User> GetByUsernameAsync(string username)
+    {
+        return await _users.Find(u => u.Username == username).FirstOrDefaultAsync();
+    }
+
     public async Task<User> GetById(string id)
     {
         ObjectId objectId = ObjectId.Parse(id);
