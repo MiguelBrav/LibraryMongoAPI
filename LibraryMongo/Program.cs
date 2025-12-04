@@ -39,7 +39,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -102,11 +106,11 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions
     ResponseWriter = HealthCheckResponse.WriteResponse
 });
 
-app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints().RequireAuthorization();
+app.MapGroup("/roles").WithTags("Role").MapRoleEndpoints();
 
-app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints().RequireAuthorization();
+app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints();
 
-app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints().RequireAuthorization();
+app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints();
 
 app.MapGroup("/users").WithTags("Users").MapUserEndpoints();
 

@@ -33,11 +33,17 @@ public class LoginUserUseCase : UseCaseBase<LoginUserDTO>
             if (user.IsBanned)
                 return Results.Forbid();
 
+            string _userRoleId = user.RolId.ToString() ?? string.Empty;    
+
+            Role userRole = await _roleRepository.GetById(_userRoleId);
+
+            string roleNameEn = userRole.Name.TryGetValue("en", out var enValue)  ? enValue : "Unknown";
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.RolId.ToString())
+                new Claim(ClaimTypes.Role, roleNameEn)
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

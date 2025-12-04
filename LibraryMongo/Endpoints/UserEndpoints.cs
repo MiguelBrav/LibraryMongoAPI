@@ -13,7 +13,7 @@ public static class UserEndpoints
 
         group.MapGet("/logout", Logout);
 
-        group.MapDelete("/{id}", Delete);
+        group.MapDelete("/{id}", Delete).RequireAuthorization("AdminOnly");
 
         return group;
     }

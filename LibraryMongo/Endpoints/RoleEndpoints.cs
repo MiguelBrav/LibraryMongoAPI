@@ -7,15 +7,15 @@ public static class RoleEndpoints
 {
     public static RouteGroupBuilder MapRoleEndpoints(this RouteGroupBuilder group)
     {
-        group.MapPost("/", Create);
+        group.MapPost("/", Create).RequireAuthorization("AdminOnly");
 
-        group.MapPut("/", Update);
+        group.MapPut("/", Update).RequireAuthorization("AdminOnly");
 
-        group.MapDelete("/{id}", Delete);
+        group.MapDelete("/{id}", Delete).RequireAuthorization("AdminOnly");
 
-        group.MapGet("/", GetAll);
+        group.MapGet("/", GetAll).RequireAuthorization();
 
-        group.MapGet("/{id}", GetById);
+        group.MapGet("/{id}", GetById).RequireAuthorization();
 
         return group;
     }
