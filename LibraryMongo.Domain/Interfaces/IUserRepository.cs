@@ -10,6 +10,7 @@ public interface IUserRepository
     Task<User> GetByUsernameAsync(string username);
     Task<User> GetById(string id);
     Task<bool> DeleteAsync(string id);
+    Task<bool> SetBanStatusAsync(string id, bool isBanned);
 
 }
 

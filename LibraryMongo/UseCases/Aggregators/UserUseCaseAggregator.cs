@@ -10,12 +10,14 @@ public class UserUseCaseAggregator : IUserUseCaseAggregator
     private readonly LoginUserUseCase _loginUser;
     private readonly DeleteUserUseCase _deleteUser;
     private readonly LogoutUserUseCase _logoutUser;
-    public UserUseCaseAggregator(CreateUserUseCase createUser, DeleteUserUseCase deleteUser, LoginUserUseCase loginUser, LogoutUserUseCase logoutUser)
+    private readonly SetBannedUserUseCase _setBannedUser;
+    public UserUseCaseAggregator(CreateUserUseCase createUser, DeleteUserUseCase deleteUser, LoginUserUseCase loginUser, LogoutUserUseCase logoutUser, SetBannedUserUseCase setBannedUser)
     {
         _createUser = createUser;
         _deleteUser = deleteUser;
         _loginUser = loginUser;
         _logoutUser = logoutUser;
+        _setBannedUser = setBannedUser;
     }
 
     public async Task<IResult> CreateUser(CreateUserDTO request)
@@ -35,5 +37,9 @@ public class UserUseCaseAggregator : IUserUseCaseAggregator
     public async Task<IResult> LogoutUser()
     {
         return await _logoutUser.Execute(Unit.Value);
+    }
+    public async Task<IResult> SetBannedUser(string id)
+    {
+        return await _setBannedUser.Execute(id);
     }
 }

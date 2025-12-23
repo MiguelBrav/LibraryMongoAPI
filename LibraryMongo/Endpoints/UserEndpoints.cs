@@ -15,6 +15,8 @@ public static class UserEndpoints
 
         group.MapDelete("/{id}", Delete).RequireAuthorization("AdminOnly");
 
+        group.MapPut("banned/{id}", SetBannedUser).RequireAuthorization("AdminOnly");
+
         return group;
     }
 
@@ -35,5 +37,9 @@ public static class UserEndpoints
     static async Task<IResult> Logout(IUserUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.LogoutUser();
+    }
+    static async Task<IResult> SetBannedUser(string id, IUserUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.SetBannedUser(id);
     }
 }

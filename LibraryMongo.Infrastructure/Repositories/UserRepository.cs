@@ -45,5 +45,16 @@ public class UserRepository : IUserRepository
 
         return result.IsAcknowledged && result.DeletedCount > 0;
     }
+    public async Task<bool> SetBanStatusAsync(string id, bool isBanned)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        var filter = Builders<User>.Filter.Eq(u => u.Id, objectId);
+        var update = Builders<User>.Update.Set(u => u.IsBanned, isBanned);
+
+        var result = await _users.UpdateOneAsync(filter, update);
+
+        return result.IsAcknowledged && result.ModifiedCount > 0;
+    }
+
 
 }

@@ -81,10 +81,12 @@ builder.Services.AddTransient<CreateUserUseCase>();
 builder.Services.AddTransient<LoginUserUseCase>();
 builder.Services.AddTransient<LogoutUserUseCase>();
 builder.Services.AddTransient<DeleteUserUseCase>();
+builder.Services.AddTransient<SetBannedUserUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();
 builder.Services.AddTransient<IUserUseCaseAggregator, UserUseCaseAggregator>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
