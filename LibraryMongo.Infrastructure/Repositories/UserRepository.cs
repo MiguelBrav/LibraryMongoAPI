@@ -56,5 +56,8 @@ public class UserRepository : IUserRepository
         return result.IsAcknowledged && result.ModifiedCount > 0;
     }
 
-
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _users.Find(FilterDefinition<User>.Empty).ToListAsync();
+    }
 }

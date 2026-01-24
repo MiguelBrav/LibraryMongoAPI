@@ -1,4 +1,5 @@
 ﻿using LibraryMongo.Models.Entities;
+using LibraryMongo.Models.Responses;
 using MongoDB.Bson;
 
 namespace LibraryMongo.Domain.Interfaces;
@@ -11,6 +12,8 @@ public interface IUserRepository
     Task<User> GetById(string id);
     Task<bool> DeleteAsync(string id);
     Task<bool> SetBanStatusAsync(string id, bool isBanned);
+    Task<List<User>> GetAllAsync();
+
 
 }
 

@@ -82,6 +82,7 @@ builder.Services.AddTransient<LoginUserUseCase>();
 builder.Services.AddTransient<LogoutUserUseCase>();
 builder.Services.AddTransient<DeleteUserUseCase>();
 builder.Services.AddTransient<SetBannedUserUseCase>();
+builder.Services.AddTransient<GetAllUserUseCase>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();

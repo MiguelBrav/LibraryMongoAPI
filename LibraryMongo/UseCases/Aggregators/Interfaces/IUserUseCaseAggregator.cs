@@ -9,4 +9,5 @@ public interface IUserUseCaseAggregator
     public Task<IResult> LogoutUser();
     public Task<IResult> DeleteUser(string id);
     public Task<IResult> SetBannedUser(string id);
+    public Task<IResult> GetAllUser();
 }
