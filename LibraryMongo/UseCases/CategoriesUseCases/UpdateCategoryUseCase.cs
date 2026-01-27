@@ -3,10 +3,11 @@ using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
 using MongoDB.Bson;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.CategoriesUseCases;
 
-public class UpdateCategoryUseCase : UseCaseBase<UpdateCategoryDTO>
+public class UpdateCategoryUseCase : UseCaseBase<UpdateCategoryDTO, IResult>
 {
     private readonly ICategoryRepository _categoryRepository;
 

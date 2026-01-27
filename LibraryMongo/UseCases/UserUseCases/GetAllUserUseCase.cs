@@ -2,10 +2,11 @@
 using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.Entities;
 using LibraryMongo.Models.Responses;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.UserUseCases;
 
-public class GetAllUserUseCase : UseCaseBase<Unit>
+public class GetAllUserUseCase : UseCaseBase<Unit, IResult>
 {
     private readonly IUserRepository _userRepository;
 

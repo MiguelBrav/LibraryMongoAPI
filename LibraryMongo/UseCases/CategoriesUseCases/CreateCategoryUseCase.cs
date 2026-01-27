@@ -2,10 +2,11 @@
 using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.CategoriesUseCases;
 
-public class CreateCategoryUseCase : UseCaseBase<CreateCategoryDTO>
+public class CreateCategoryUseCase : UseCaseBase<CreateCategoryDTO, IResult>
 {
     private readonly ICategoryRepository _categoryRepository;
 
@@ -30,7 +31,7 @@ public class CreateCategoryUseCase : UseCaseBase<CreateCategoryDTO>
 
             await _categoryRepository.CreateAsync(category);
 
-            return TypedResults.Created($"/categories/{category.Id}", category);
+            return TypedResults.Created($"/categories/{category.Id}", new { Name = category.Name, Id = category.Id.ToString()});
         }
         catch (Exception ex)
         {

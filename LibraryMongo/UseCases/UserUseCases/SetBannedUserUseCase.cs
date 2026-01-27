@@ -1,9 +1,10 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.UserUseCases;
 
-public class SetBannedUserUseCase : UseCaseBase<string>
+public class SetBannedUserUseCase : UseCaseBase<string, IResult>
 {
     private readonly IUserRepository _userRepository;
 

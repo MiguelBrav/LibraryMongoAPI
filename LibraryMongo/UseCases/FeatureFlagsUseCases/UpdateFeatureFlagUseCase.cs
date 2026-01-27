@@ -2,10 +2,11 @@
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
 using MongoDB.Bson;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.FeatureFlagsUseCases;
 
-public class UpdateFeatureFlagUseCase : UseCaseBase<UpdateFeatureFlagDTO>
+public class UpdateFeatureFlagUseCase : UseCaseBase<UpdateFeatureFlagDTO, IResult>
 {
     private readonly IFeatureFlagRepository _featureFlagRepository;
 

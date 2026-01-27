@@ -1,10 +1,11 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
 using LibraryMongo.Models.Responses;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.RoleUseCases;
 
-public class GetAllRoleUseCase : UseCaseBase<Unit>
+public class GetAllRoleUseCase : UseCaseBase<Unit, IResult>
 {
     private readonly IRoleRepository _roleRepository;
 

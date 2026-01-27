@@ -1,9 +1,10 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.CategoriesUseCases;
 
-public class DeleteCategoryUseCase : UseCaseBase<string>
+public class DeleteCategoryUseCase : UseCaseBase<string, IResult>
 {
     private readonly ICategoryRepository _categoryRepository;
 

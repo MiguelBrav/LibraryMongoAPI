@@ -1,9 +1,10 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.FeatureFlagsUseCases;
 
-public class DeleteFeatureFlagUserCase : UseCaseBase<string>
+public class DeleteFeatureFlagUserCase : UseCaseBase<string, IResult>
 {
     private readonly IFeatureFlagRepository _featureFlagRepository;
 

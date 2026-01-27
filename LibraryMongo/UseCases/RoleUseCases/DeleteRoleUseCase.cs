@@ -4,10 +4,11 @@ using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
 using MongoDB.Bson;
 using System.Data;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.RoleUseCases;
 
-public class DeleteRoleUseCase : UseCaseBase<string>
+public class DeleteRoleUseCase : UseCaseBase<string, IResult>
 {
     private readonly IRoleRepository _roleRepository;
 

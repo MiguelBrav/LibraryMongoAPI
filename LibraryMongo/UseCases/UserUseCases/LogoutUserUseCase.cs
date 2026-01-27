@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.UserUseCases;
 
-public class LogoutUserUseCase : UseCaseBase<Unit>
+public class LogoutUserUseCase : UseCaseBase<Unit, IResult>
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 

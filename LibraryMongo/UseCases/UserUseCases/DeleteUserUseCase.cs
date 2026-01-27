@@ -1,9 +1,10 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.UserUseCases;
 
-public class DeleteUserUseCase : UseCaseBase<string>
+public class DeleteUserUseCase : UseCaseBase<string,IResult>
 {
     private readonly IUserRepository _userRepository;
 

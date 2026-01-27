@@ -2,10 +2,11 @@
 using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.RoleUseCases;
 
-public class CreateRoleUseCase : UseCaseBase<CreateRoleDTO>
+public class CreateRoleUseCase : UseCaseBase<CreateRoleDTO, IResult>
 {
     private readonly IRoleRepository _roleRepository;
 
@@ -30,7 +31,7 @@ public class CreateRoleUseCase : UseCaseBase<CreateRoleDTO>
 
             await _roleRepository.CreateAsync(role);
 
-            return TypedResults.Created($"/roles/{role.Id}", role);
+            return TypedResults.Created($"/roles/{role.Id}", new { Name = role.Name, Id = role.Id.ToString() });
         }
         catch (Exception ex)
         {

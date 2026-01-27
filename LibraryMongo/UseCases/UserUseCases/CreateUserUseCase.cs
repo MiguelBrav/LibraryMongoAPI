@@ -3,10 +3,11 @@ using LibraryMongo.Helpers;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
 using MongoDB.Bson;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.UserUseCases;
 
-public class CreateUserUseCase : UseCaseBase<CreateUserDTO>
+public class CreateUserUseCase : UseCaseBase<CreateUserDTO, IResult>
 {
     private readonly IRoleRepository _roleRepository;
 
@@ -51,9 +52,9 @@ public class CreateUserUseCase : UseCaseBase<CreateUserDTO>
                 FeatureFlags = new List<ObjectId>()
             };
 
-            await _userRepository.CreateAsync(user);
+            ObjectId newUser = await _userRepository.CreateAsync(user);
 
-            return TypedResults.Created($"/user/{user.Id}", request);
+            return TypedResults.Created($"/user/{user.Id}", new { Username = request.Username, Id = user.Id.ToString() });
         }
         catch (Exception ex)
         {

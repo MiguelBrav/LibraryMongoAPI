@@ -1,10 +1,11 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
 using LibraryMongo.Models.Responses;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.CategoriesUseCases;
 
-public class GetByIdCategoryUseCase : UseCaseBase<string>
+public class GetByIdCategoryUseCase : UseCaseBase<string, IResult>
 {
     private readonly ICategoryRepository _categoryRepository;
 

@@ -1,10 +1,11 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.FeatureFlagsUseCases;
 
-public class CreateFeatureFlagUseCase : UseCaseBase<CreateFeatureFlagDTO>
+public class CreateFeatureFlagUseCase : UseCaseBase<CreateFeatureFlagDTO, IResult>
 {
     private readonly IFeatureFlagRepository _featureFlagRepository;
 
@@ -36,7 +37,7 @@ public class CreateFeatureFlagUseCase : UseCaseBase<CreateFeatureFlagDTO>
 
             await _featureFlagRepository.CreateAsync(flag);
 
-            return TypedResults.Created($"/featureflags/{flag.Id}", flag);
+            return TypedResults.Created($"/featureflags/{flag.Id}", new { Name = flag.Name, Id = flag.Id.ToString() });
         }
         catch (Exception ex)
         {

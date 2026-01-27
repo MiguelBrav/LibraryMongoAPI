@@ -3,10 +3,11 @@ using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.DTOs;
 using LibraryMongo.Models.Entities;
 using MongoDB.Bson;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.RoleUseCases;
 
-public class UpdateRoleUseCase : UseCaseBase<UpdateRoleDTO>
+public class UpdateRoleUseCase : UseCaseBase<UpdateRoleDTO, IResult>
 {
     private readonly IRoleRepository _roleRepository;
 

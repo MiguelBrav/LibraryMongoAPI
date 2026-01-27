@@ -1,10 +1,11 @@
 ﻿using LibraryMongo.Domain.Interfaces;
 using LibraryMongo.Models.Entities;
 using LibraryMongo.Models.Responses;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.FeatureFlagsUseCases;
 
-public class GetByIdFeatureFlagUseCase : UseCaseBase<string>
+public class GetByIdFeatureFlagUseCase : UseCaseBase<string, IResult>
 {
     private readonly IFeatureFlagRepository _featureFlagRepository;
 

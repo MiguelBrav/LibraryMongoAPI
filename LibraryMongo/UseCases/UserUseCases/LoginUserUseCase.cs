@@ -5,10 +5,11 @@ using LibraryMongo.Models.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using UseCaseCore.UseCases;
 
 namespace LibraryMongo.UseCases.UserUseCases;
 
-public class LoginUserUseCase : UseCaseBase<LoginUserDTO>
+public class LoginUserUseCase : UseCaseBase<LoginUserDTO, IResult>
 {
     private readonly IRoleRepository _roleRepository;
     private readonly IUserRepository _userRepository;

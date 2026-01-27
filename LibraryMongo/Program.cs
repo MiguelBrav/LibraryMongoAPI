@@ -12,6 +12,7 @@ using LibraryMongo.UseCases.UserUseCases;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using MongoDB.Driver;
+using UseCaseCore.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,7 @@ builder.Services.AddTransient<LogoutUserUseCase>();
 builder.Services.AddTransient<DeleteUserUseCase>();
 builder.Services.AddTransient<SetBannedUserUseCase>();
 builder.Services.AddTransient<GetAllUserUseCase>();
+builder.Services.AddTransient<UseCaseDispatcher>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();
