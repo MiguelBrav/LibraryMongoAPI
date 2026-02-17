@@ -5,6 +5,7 @@ using LibraryMongo.Infrastructure.Repositories;
 using LibraryMongo.Models.Entities;
 using LibraryMongo.UseCases.Aggregators;
 using LibraryMongo.UseCases.Aggregators.Interfaces;
+using LibraryMongo.UseCases.BooksUseCases;
 using LibraryMongo.UseCases.CategoriesUseCases;
 using LibraryMongo.UseCases.FeatureFlagsUseCases;
 using LibraryMongo.UseCases.RoleUseCases;
@@ -63,6 +64,7 @@ builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
 builder.Services.AddSingleton<IFeatureFlagRepository, FeatureFlagRepository>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IBookRepository, BookRepository>();
 builder.Services.AddTransient<CreateRoleUseCase>();
 builder.Services.AddTransient<UpdateRoleUseCase>();
 builder.Services.AddTransient<DeleteRoleUseCase>();
@@ -84,11 +86,13 @@ builder.Services.AddTransient<LogoutUserUseCase>();
 builder.Services.AddTransient<DeleteUserUseCase>();
 builder.Services.AddTransient<SetBannedUserUseCase>();
 builder.Services.AddTransient<GetAllUserUseCase>();
+builder.Services.AddTransient<CreateBookUseCase>();
 builder.Services.AddTransient<UseCaseDispatcher>();
 builder.Services.AddTransient<IRoleUseCaseAggregator, RoleUseCaseAggregator>();
 builder.Services.AddTransient<ICategoryUseCaseAggregator, CategoryUseCaseAggregator>();
 builder.Services.AddTransient<IFeatureFlagUseCaseAggregator, FeatureFlagUseCaseAggregator>();
 builder.Services.AddTransient<IUserUseCaseAggregator, UserUseCaseAggregator>();
+builder.Services.AddTransient<IBookUseCaseAggregator, BookUseCaseAggregator>();
 
 var app = builder.Build();
 
@@ -118,5 +122,7 @@ app.MapGroup("/categories").WithTags("Category").MapCategoryEndpoints();
 app.MapGroup("/featureflags").WithTags("FeatureFlag").MapFeatureFlagEndpoints();
 
 app.MapGroup("/users").WithTags("Users").MapUserEndpoints();
+
+app.MapGroup("/books").WithTags("Books").MapBooksEndpoints();
 
 app.Run();
