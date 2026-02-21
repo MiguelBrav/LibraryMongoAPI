@@ -21,4 +21,9 @@ public class BookRepository : IBookRepository
         return book.Id;
     }
 
+    public async Task<List<Book>> GetAllAsync()
+    {
+        return await _books.Find(FilterDefinition<Book>.Empty).ToListAsync();
+    }
+
 }
