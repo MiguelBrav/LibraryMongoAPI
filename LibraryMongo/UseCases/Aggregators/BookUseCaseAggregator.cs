@@ -9,12 +9,14 @@ public class BookUseCaseAggregator : IBookUseCaseAggregator
 {
     private readonly CreateBookUseCase _createBook;
     private readonly GetAllBookUseCase _getAllBooks;
+    private readonly GetByIdBookUseCase _getByIdBook;
  
     private readonly UseCaseDispatcher _useCaseDispatcher;
-    public BookUseCaseAggregator(CreateBookUseCase createBook, GetAllBookUseCase getAllBooks, UseCaseDispatcher useCaseDispatcher)
+    public BookUseCaseAggregator(CreateBookUseCase createBook, GetAllBookUseCase getAllBooks, GetByIdBookUseCase getByIdBook, UseCaseDispatcher useCaseDispatcher)
     {
         _createBook = createBook;
         _getAllBooks = getAllBooks;
+        _getByIdBook = getByIdBook;
         _useCaseDispatcher = useCaseDispatcher;
     }
     public async Task<IResult> CreateBook(CreateBookDTO request)
@@ -25,5 +27,10 @@ public class BookUseCaseAggregator : IBookUseCaseAggregator
     public async Task<IResult> GetAllBooks()
     {
         return await _useCaseDispatcher.Dispatch(_getAllBooks, Unit.Value);
+    }
+
+    public async Task<IResult> GetByIdBook(string id)
+    {
+        return await _useCaseDispatcher.Dispatch(_getByIdBook, id);
     }
 }

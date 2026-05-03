@@ -9,6 +9,7 @@ public static class BooksEndpoints
     {
         group.MapPost("/", Create).RequireAuthorization("AdminOnly");
         group.MapGet("/", GetAll).RequireAuthorization();
+        group.MapGet("/{id}", GetById).RequireAuthorization();
 
         return group;
     }
@@ -21,5 +22,10 @@ public static class BooksEndpoints
     static async Task<IResult> GetAll(IBookUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.GetAllBooks();
+    }
+
+    static async Task<IResult> GetById(string id, IBookUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.GetByIdBook(id);
     }
 }

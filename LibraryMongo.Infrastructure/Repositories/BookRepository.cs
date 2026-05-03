@@ -26,4 +26,11 @@ public class BookRepository : IBookRepository
         return await _books.Find(FilterDefinition<Book>.Empty).ToListAsync();
     }
 
+    public async Task<Book> GetById(string id)
+    {
+        ObjectId objectId = ObjectId.Parse(id);
+        FilterDefinition<Book> filter = Builders<Book>.Filter.Eq(b => b.Id, objectId);
+        return await _books.Find(filter).FirstOrDefaultAsync();
+    }
+
 }
