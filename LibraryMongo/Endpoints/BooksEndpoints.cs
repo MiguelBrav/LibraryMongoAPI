@@ -8,6 +8,7 @@ public static class BooksEndpoints
     public static RouteGroupBuilder MapBooksEndpoints(this RouteGroupBuilder group)
     {
         group.MapPost("/", Create).RequireAuthorization("AdminOnly");
+        group.MapPut("/", Update).RequireAuthorization("AdminOnly");
         group.MapGet("/", GetAll).RequireAuthorization();
         group.MapGet("/{id}", GetById).RequireAuthorization();
 
@@ -17,6 +18,11 @@ public static class BooksEndpoints
     static async Task<IResult> Create(CreateBookDTO book, IBookUseCaseAggregator useCase, HttpContext httpContext)
     {
         return await useCase.CreateBook(book);
+    }
+
+    static async Task<IResult> Update(UpdateBookDTO book, IBookUseCaseAggregator useCase, HttpContext httpContext)
+    {
+        return await useCase.UpdateBook(book);
     }
 
     static async Task<IResult> GetAll(IBookUseCaseAggregator useCase, HttpContext httpContext)

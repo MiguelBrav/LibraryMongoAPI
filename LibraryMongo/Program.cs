@@ -87,6 +87,7 @@ builder.Services.AddTransient<DeleteUserUseCase>();
 builder.Services.AddTransient<SetBannedUserUseCase>();
 builder.Services.AddTransient<GetAllUserUseCase>();
 builder.Services.AddTransient<CreateBookUseCase>();
+builder.Services.AddTransient<UpdateBookUseCase>();
 builder.Services.AddTransient<GetAllBookUseCase>();
 builder.Services.AddTransient<GetByIdBookUseCase>();
 builder.Services.AddTransient<UseCaseDispatcher>();

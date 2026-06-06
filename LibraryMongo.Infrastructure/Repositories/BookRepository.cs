@@ -33,4 +33,12 @@ public class BookRepository : IBookRepository
         return await _books.Find(filter).FirstOrDefaultAsync();
     }
 
+    public async Task<bool> UpdateAsync(Book book)
+    {
+        FilterDefinition<Book> filter = Builders<Book>.Filter.Eq(b => b.Id, book.Id);
+        var result = await _books.ReplaceOneAsync(filter, book);
+
+        return result.IsAcknowledged && result.ModifiedCount > 0;
+    }
+
 }
