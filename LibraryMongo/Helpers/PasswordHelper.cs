@@ -12,8 +12,12 @@ public static class PasswordHelper
     {
         byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
 
-        using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations, HashAlgorithmName.SHA256);
-        byte[] hash = pbkdf2.GetBytes(HashSize);
+        byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
+            password,
+            salt,
+            Iterations,
+            HashAlgorithmName.SHA256,
+            HashSize);
 
         return Convert.ToBase64String(salt) + "." + Convert.ToBase64String(hash);
     }
@@ -27,8 +31,12 @@ public static class PasswordHelper
         byte[] salt = Convert.FromBase64String(parts[0]);
         byte[] storedHash = Convert.FromBase64String(parts[1]);
 
-        using var pbkdf2 = new Rfc2898DeriveBytes(enteredPassword, salt, Iterations, HashAlgorithmName.SHA256);
-        byte[] hash = pbkdf2.GetBytes(HashSize);
+        byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
+            enteredPassword,
+            salt,
+            Iterations,
+            HashAlgorithmName.SHA256,
+            HashSize);
 
         return CryptographicOperations.FixedTimeEquals(storedHash, hash);
     }
